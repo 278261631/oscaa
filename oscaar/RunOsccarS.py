@@ -2,7 +2,9 @@ import os
 import wx
 # import oscaar.oscaarGUI
 from win32file import CreateFile
-from oscaar import oscaarGUI
+import oscaarGUI
+from numpy.distutils.fcompiler import none
+
 path = 'E:\\xiaolong'
 def renameErrorFits(path):
     for fileName in os.listdir(path):
@@ -50,13 +52,13 @@ def WriteInitParFile(initParFilePath):
     print 'Finished'
 # print '---------' 
 #write init.par
-initParFilePath=os.path.join(os.path.abspath('.'),'oscaar\\initTest.par')
+initParFilePath=os.path.join(os.path.abspath('.'),'\\initTest.par')
 print initParFilePath
 # initParFilePath='D:\\workspace_py\\oscc\\oscaar\\init.par'
 WriteInitParFile(initParFilePath)
 #write region file
 
-initRegFilePath=os.path.join(os.path.abspath('.'),'oscc\\oscaar\\ds9.reg')
+initRegFilePath=os.path.join(os.path.abspath('.'),'\\ds9.reg')
 def WriteDS9RegFile(initRegFilePath):
     if os.path.isfile(initRegFilePath):
         f = open(initRegFilePath, "r")
@@ -86,8 +88,11 @@ ExportStartList()
 def RunOscaar():
     print '---------RunOscaar-----------'
     app=wx.App()
-    oscaarGUI.OscaarFrame(None,-1 ,'')
+    mainFrame=oscaarGUI.OscaarFrame(None,-1)
+#     mainFrame.runButton.LabelText='xx';
+#     mainFrame.runOscaar(None)
     
+#     mainFrame.Close()
     app.MainLoop()
     
-# RunOscaar()
+RunOscaar()
