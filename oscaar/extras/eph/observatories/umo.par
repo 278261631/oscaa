@@ -1,0 +1,17 @@
+name: University Of Maryland Observatory
+latitude: 38.0:58.0:50.16
+longitude: -76.0:56.0:13.92
+elevation: 20.0
+temperature: 15.0
+min_horizon: 20:00:00
+start_date: (2013,9,10,0,0,0)
+end_date: (2013,9,17,0,0,0)
+mag_limit: 12.1
+depth_limit: 0.008
+calc_transits: True
+calc_eclipses: False
+html_out: True
+text_out: True
+twilight: -6
+show_lt: 0
+band: V

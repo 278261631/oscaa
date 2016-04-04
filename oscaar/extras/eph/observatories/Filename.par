@@ -1,0 +1,13 @@
+name: Name
+longitude: deg:min:sec
+elevation: 0.0
+temperature: 0.0
+min_horizon: deg:min:sec
+start_date: (YYYY,MM,DD,00,00,00)
+end_date: (YYYY,MM,DD,00,00,00)
+v_limit: 0.0
+depth_limit: 0.0
+calc_eclipses: True
+html_out: True
+text_out: True
+twilight: 0

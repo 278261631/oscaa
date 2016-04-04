@@ -1,0 +1,14 @@
+Path to Dark Frames: E:\as\dark&bias\20150305=-30c\-30c--001bias.fits,E:\as\dark&bias\20150305=-30c\-30c--001dark_120s.fits,E:\as\dark&bias\20150305=-30c\-30c--001dark_60s.fits
+Path to Data Images: E:\xiaolong\alipy_out\X1_dupe-1.fits,E:\xiaolong\alipy_out\X1_dupe-2.fits,E:\xiaolong\alipy_out\X1_dupe-3.fits,E:\xiaolong\alipy_out\X1_dupe-4.fits,E:\xiaolong\alipy_out\X1_dupe-5.fits
+Path to Master-Flat Frame: E:\as\AutoFlat.fits
+Path to Regions File: E:\xiaolong\x1.reg,E:\xiaolong\alipy_out\X1_dupe-1.fits;
+Output Path: E:\xiaolong\result.txt.pkl
+Ingress: 2013-05-15 ; 10:06:30
+Egress: 2013-05-15 ; 11:02:35
+Plot Tracking: on
+Plot Photometry: on
+Smoothing Constant: 3
+Radius: 4.5
+Tracking Zoom: 15
+CCD Gain: 1.0
+Exposure Time Keyword: DATE-OBS
