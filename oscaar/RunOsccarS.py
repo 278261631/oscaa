@@ -6,6 +6,8 @@ import oscaarGUI
 from numpy.distutils.fcompiler import none
 
 path = 'E:\\xiaolong'
+appRoot=os.path.abspath('.')
+print appRoot
 def renameErrorFits(path):
     for fileName in os.listdir(path):
         if os.path.isfile(os.path.join(path, fileName)):
@@ -52,13 +54,12 @@ def WriteInitParFile(initParFilePath):
     print 'Finished'
 # print '---------' 
 #write init.par
-initParFilePath=os.path.join(os.path.abspath('.'),'\\initTest.par')
+initParFilePath=os.path.join(appRoot,'initTest.par')
 print initParFilePath
 # initParFilePath='D:\\workspace_py\\oscc\\oscaar\\init.par'
 WriteInitParFile(initParFilePath)
 #write region file
-
-initRegFilePath=os.path.join(os.path.abspath('.'),'\\ds9.reg')
+initRegFilePath=os.path.join(appRoot,'ds9.reg')
 def WriteDS9RegFile(initRegFilePath):
     if os.path.isfile(initRegFilePath):
         f = open(initRegFilePath, "r")
@@ -74,7 +75,9 @@ def WriteDS9RegFile(initRegFilePath):
     f.write("circle(136,136,20)\n")
     f.close()
     print 'Finished'
-# WriteDS9RegFile(initRegFilePath)
+print initRegFilePath
+WriteDS9RegFile(initRegFilePath)
+
 
 ##align 
 
