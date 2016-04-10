@@ -17,7 +17,7 @@ images_to_align = sorted(glob.glob(os.path.join(imagePathRoot,"*.fits")))
 ref_image = "D:\\workspace_py\\alignTest\\images\\X1_dupe-1.fits"
 imgOutPath=os.path.join(imagePathRoot,'alipy_out')
 
-identifications = alipy.ident.run(ref_image, images_to_align,hdu=0, visu=False,sexkeepcat=False)
+identifications = alipy.ident.run(ref_image, images_to_align,hdu=0, visu=False,sexkeepcat=False, verbose=False)
 # That's it !
 # Put visu=True to get visualizations in form of png files (nice but much slower)
 # On multi-extension data, you will want to specify the hdu (see API doc).
@@ -77,7 +77,10 @@ for id in identifications:
                     os.remove(outfilename)
                 pyfits.writeto(outfilename, imageData, imageHeader)
                 
+                print '----------------------------------'
                 fitsToCat = imgcat.ImgCat(outfilename, hdu=0)
-                fitsToCat.makecat(rerun=True, keepcat=True, verbose=True)
-                fitsToCat.makestarlist(skipsaturated=True, n=500, verbose=True)
+                fitsToCat.makecat(rerun=True, keepcat=True, verbose=False)
+                fitsToCat.makestarlist(skipsaturated=True, n=5, verbose=True)
+                
+                print fitsToCat.starlist
 # To be continued ...
