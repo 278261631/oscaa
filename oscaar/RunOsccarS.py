@@ -1,7 +1,7 @@
 import os
 import wx
 # import oscaar.oscaarGUI
-from win32file import CreateFile
+# from win32file import CreateFile
 import oscaarGUI
 from numpy.distutils.fcompiler import none
 
@@ -60,7 +60,9 @@ print initParFilePath
 WriteInitParFile(initParFilePath)
 #write region file
 initRegFilePath=os.path.join(appRoot,'ds9.reg')
-def WriteDS9RegFile(initRegFilePath):
+def WriteDS9RegFile(initRegFilePath,x=0,y=0,r=20):
+    fileDirPath=os.path.dirname(initRegFilePath)
+    os.mkdir(fileDirPath);
     if os.path.isfile(initRegFilePath):
         f = open(initRegFilePath, "r")
         print f.read()
@@ -98,4 +100,13 @@ def RunOscaar():
 #     mainFrame.Close()
     app.MainLoop()
     
-RunOscaar()
+# RunOscaar()
+
+def main():
+
+    '''
+    This allows oscaarGUI to be imported without
+    automatically opening the frame every time.
+    '''
+
+    pass
