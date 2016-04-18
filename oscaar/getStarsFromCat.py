@@ -8,29 +8,47 @@ import os
 from alipy import imgcat
 import oscaarGUI
 import wx
+import PyRenameFit
+from oscaar import AlignFitsAlipy
 # from oscaar import RunOsccarS
 
 # 需要导出吗？ 导出一个公共的cat？ 目标star列表 ？
 #还是根本不需要导出  直接拿公共区域 和 最亮的星星列表 直接位置比对就可以了？
 #还是连公共区域都不用去管了？
 #直接写下边的执行部分吧
+
+projectRoot="D:\\workspace_py\\"
+srcImagePath=os.path.join(projectRoot,"images")
+#也许改成*.& 就不用重命名了  不过还是重命名了好 省去不必要的麻烦
+srcImageFileFilter=os.path.join(projectRoot,"images/*.fits")
+ref_image =os.path.join(projectRoot,"ref", "X1_dupe-1.fits")
+alipy_outdir=os.path.join(projectRoot,"alipy_out")
+headFitsDir=os.path.join(projectRoot,"alipy_head")
+
+
+
 appRoot=os.path.abspath('.')
-imagePathRoot="D:\\workspace_py\\alignTest\\images\\"
-# images_to_align = sorted(glob.glob(os.path.join(imagePathRoot,"*.fits")))
-ref_image = "D:\\workspace_py\\alignTest\\images\\X1_dupe-1.fits"
-imgOutPath=os.path.join(imagePathRoot,'alipy_out')
-                
+srcImagePath=headFitsDir
+# images_to_align = sorted(glob.glob(os.path.join(srcImagePath,"*.fits")))
+#修改fit 和 fts文件后缀为fits 包含所有目录
+PyRenameFit.renameErrorFits(srcImagePath);   
+#对其到输出目录  一般是alipy_head             
+AlignFitsAlipy.AlignFitsFileWithHeadMessage(srcImageFileFilter, ref_image, alipy_outdir, headFitsDir)
+
+# print '----------------------------------'
+# fitsToCat = imgcat.ImgCat('D:/workspace_py/images/alipy_head/X1_dupe-1.fits', hdu=0)
+# fitsToCat.makecat(rerun=True, keepcat=True, verbose=False)
+# fitsToCat.makestarlist(skipsaturated=True, n=5, verbose=True)
+# 
+# print fitsToCat.starlist
+# for starItem in fitsToCat.starlist:
+# #     print starItem
+#     print str(starItem.x) +"  :  "+ str(starItem.y) +"  :  "+ str(starItem.flux) +"  :  "+ str(starItem.fwhm)
 print '----------------------------------'
-fitsToCat = imgcat.ImgCat('D:/workspace_py/alignTest/images/head_/X1_dupe-1.fits', hdu=0)
+fitsToCat = imgcat.ImgCat("D:/workspace_py/alipy_head/X1_dupe-5.fits", hdu=0)
 fitsToCat.makecat(rerun=True, keepcat=True, verbose=False)
 fitsToCat.makestarlist(skipsaturated=True, n=5, verbose=True)
-
-print fitsToCat.starlist
-for starItem in fitsToCat.starlist:
-#     print starItem
-    print str(starItem.x) +"  :  "+ str(starItem.y) +"  :  "+ str(starItem.flux) +"  :  "+ str(starItem.fwhm)
-print '----------------------------------'
-fitsToCat = imgcat.ImgCat('D:/workspace_py/alignTest/images/head_/X1_dupe-5.fits', hdu=0)
+fitsToCat = imgcat.ImgCat(ref_image, hdu=0)
 fitsToCat.makecat(rerun=True, keepcat=True, verbose=False)
 fitsToCat.makestarlist(skipsaturated=True, n=5, verbose=True)
 
@@ -73,7 +91,7 @@ def WriteInitParFile(initParFilePath,dataImageRoot,regFilePath,orignFitFilePath)
         f.write("Path to Dark Frames: D:\\workspace_py\\alignTest\\dark&bias\\20150305=-30c\\-30c--001bias.fits,D:\\workspace_py\\alignTest\\dark&bias\\20150305=-30c\\-30c--001dark_120s.fits,D:\\workspace_py\\alignTest\\dark&bias\\20150305=-30c\\-30c--001dark_60s.fits\n")
 #         f.write("Path to Data Images: E:\\xiaolong\\alipy_out\\X1_dupe-1.fits,E:\\xiaolong\\alipy_out\\X1_dupe-2.fits,E:\\xiaolong\\alipy_out\\X1_dupe-3.fits,E:\\xiaolong\\alipy_out\\X1_dupe-4.fits,E:\\xiaolong\\alipy_out\\X1_dupe-5.fits\n")
         #last , 
-        f.write("Path to Data Images: "+dataImageFiles+"\n") 
+        f.write("Path to Data Images: "+dataImageFiles+","+orignFitFilePath+"\n") 
         f.write("Path to Master-Flat Frame: D:\\workspace_py\\alignTest\\AutoFlat.fits\n")
 #         f.write("Path to Regions File: E:\\xiaolong\\x1.reg,E:\\xiaolong\\alipy_out\\X1_dupe-1.fits;\n")
         f.write("Path to Regions File: "+regFilePath+","+orignFitFilePath+";\n")
@@ -95,6 +113,8 @@ def WriteInitParFile(initParFilePath,dataImageRoot,regFilePath,orignFitFilePath)
 
 
 print fitsToCat.starlist
+###这里需要固定一张图里的比较星，因为必须有至少一颗比较星才可以运行OSCAAR 
+####主星可以按照需求找出并生成
 starX=fitsToCat.starlist[0].x
 starY=fitsToCat.starlist[0].y
 starXc=fitsToCat.starlist[1].x
@@ -105,7 +125,7 @@ for starItem in fitsToCat.starlist:
     
 # WriteDS9RegFile(os.path.join(appRoot,'hehe.reg'),starItem.x,starItem.y,)
 WriteDS9RegFile(os.path.join(appRoot,'hehe.reg'),x=starX,y=starY,xc=starXc,yc=starYc)
-WriteInitParFile(os.path.join(appRoot,'init.par'),imagePathRoot,os.path.join(appRoot,'hehe.reg'),ref_image)
+WriteInitParFile(os.path.join(appRoot,'init.par'),srcImagePath,os.path.join(appRoot,'hehe.reg'),ref_image)
     
 def RunOscaar():
     print '---------RunOscaar-----------'
@@ -114,8 +134,10 @@ def RunOscaar():
     mainFrame.runButton.LabelText='xx';
     mainFrame.runOscaar(None)
     
-#     mainFrame.Close()
+    mainFrame.Close()
     app.MainLoop()
     
 RunOscaar()
     
+##还可以找出无法对其的星点 比较亮的 消失的 和新生的 或者移动的？ 通量大于3000？还是2000
+#D:\ds9>ds9.exe D:\workspace_py\alipy_head\X1_dupe-1.fits  D:\workspace_py\alipy_head\X1_dupe-5.fits  -regions load all D:\workspaces\oscc\oscaar\hehe.reg -blink yes 

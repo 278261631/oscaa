@@ -21,6 +21,6 @@ def renameErrorFits(path):
         elif os.path.isdir(os.path.join(path, fileName)):
             renameErrorFits(os.path.join(path, fileName))
             print 'hehe'
-renameErrorFits(path)
+# renameErrorFits(path)
         
 #        print fileName.split('.')[-1] 

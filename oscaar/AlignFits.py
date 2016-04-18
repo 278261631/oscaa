@@ -12,10 +12,10 @@ from alipy import imgcat
 from scipy import False_
 
 # images_to_align = sorted(glob.glob("E:/xiaolong/xximages/*.fits"))
-imagePathRoot="D:\\workspace_py\\alignTest\\images\\"
-images_to_align = sorted(glob.glob(os.path.join(imagePathRoot,"*.fits")))
+imasrcImagePath:\\workspace_py\\alignTest\\images\\"
+images_to_align = sorted(glob.glob(os.path.join(imasrcImagePath.fits")))
 ref_image = "D:\\workspace_py\\alignTest\\images\\X1_dupe-1.fits"
-imgOutPath=os.path.join(imagePathRoot,'alipy_out')
+imgOutPath=os.path.join(imasrcImagePathlipy_out')
 
 identifications = alipy.ident.run(ref_image, images_to_align,hdu=0, visu=False,sexkeepcat=False, verbose=False)
 # That's it !
@@ -62,14 +62,14 @@ for id in identifications:
                 #read and rewrite the Head
                 srcFitsFileName=os.path.basename(id.ukn.filepath)
 #                 imageHeader=pyfits.getheader("images/"+srcFitsFileName)
-                imageHeader=pyfits.getheader(os.path.join(imagePathRoot,srcFitsFileName))
+                imageHeader=pyfits.getheader(os.path.join(imasrcImagePathcFitsFileName))
                 #write JD into head 
                 imageDataSrcDir=imgOutPath
                 imageDataFileName=os.path.join(imageDataSrcDir,os.path.splitext(srcFitsFileName)[0]+"_affineremap.fits")
                 imageData= pyfits.getdata(imageDataFileName)
 #                 imageHeader=pyfits.getheader("images/X1_dupe-2.fits")
                 
-                outdir=os.path.join(imagePathRoot, "head_")
+                outdir=os.path.join(imasrcImagePathhead_")
                 if not os.path.isdir(outdir):
                     os.makedirs(outdir)         
                 outfilename = os.path.join(outdir, srcFitsFileName)
