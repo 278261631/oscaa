@@ -141,3 +141,6 @@ RunOscaar()
     
 ##还可以找出无法对其的星点 比较亮的 消失的 和新生的 或者移动的？ 通量大于3000？还是2000
 #D:\ds9>ds9.exe D:\workspace_py\alipy_head\X1_dupe-1.fits  D:\workspace_py\alipy_head\X1_dupe-5.fits  -regions load all D:\workspaces\oscc\oscaar\hehe.reg -blink yes 
+
+#可以用机器学习算法中的分类算法 或者判定是哪一类 是不是新星 （分类为 新星 移动 变亮 变暗 消失
+#或者判定是否  新图对于标准图来说 新图上的某颗星 是否约等于标准图上的某颗 （还要计算是不是标准图一定通量以上的都找到了匹配星
